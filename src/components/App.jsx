@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import ToDoItem from "./ToDoItem";
 
 function App() {
   const [inputText, setInputText] = useState("");
   const [items, setItem] = useState([]);
   const [id, setId] = useState(1);
-  
+
   function handleChange(event) {
     const newInput = event.target.value;
     setInputText(newInput);
@@ -12,8 +13,8 @@ function App() {
 
   function addItem() {
     setId(id + 1);
-    setItem( (prevItem) => {
-      return [...prevItem, {id: id, content: inputText}];
+    setItem((prevItem) => {
+      return [...prevItem, { id: id, content: inputText }];
     });
     setInputText("");
   }
@@ -31,7 +32,13 @@ function App() {
       </div>
       <div>
         <ul>
-          {items.map( todoItem => <li key={todoItem.id}> {todoItem.content}</li> )}
+          {items.map(todoItem =>
+            <ToDoItem
+              key={todoItem.id}
+              id={todoItem.id}
+              text={todoItem.content}
+            />
+          )}
         </ul>
       </div>
     </div>
