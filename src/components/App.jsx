@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import ToDoItem from "./ToDoItem";
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [inputText, setInputText] = useState("");
   const [items, setItem] = useState([]);
-  const [id, setId] = useState(1);
 
   function handleChange(event) {
     const newInput = event.target.value;
@@ -12,11 +12,24 @@ function App() {
   }
 
   function addItem() {
-    setId(id + 1);
+    if (inputText !== "") {
+      setItem((prevItem) => {
+        return [...prevItem, { id: uuidv4(), content: inputText }];
+      });
+      setInputText("");
+    }
+  }
+
+  function deleteItem(id) {
     setItem((prevItem) => {
-      return [...prevItem, { id: id, content: inputText }];
+      // Filter through an "items" array to get rid of the one that match with "id"
+      return prevItem.filter(
+        // Loop through each item in previous "items" array and get the "index" of each item
+        (items, index) => {
+          // Return only item that index "not match" with the id (the item that "match" the id is equal to got delete)
+          return index !== id;
+        });
     });
-    setInputText("");
   }
 
   return (
@@ -32,11 +45,12 @@ function App() {
       </div>
       <div>
         <ul>
-          {items.map(todoItem =>
+          {items.map( (todoItem, index) =>
             <ToDoItem
               key={todoItem.id}
-              id={todoItem.id}
+              id={index}
               text={todoItem.content}
+              onChecked={deleteItem}
             />
           )}
         </ul>
