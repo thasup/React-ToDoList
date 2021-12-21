@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import ToDoItem from "./ToDoItem";
+import InputArea from "./InputArea";
 import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-  const [inputText, setInputText] = useState("");
+  
   const [items, setItem] = useState([]);
 
-  function handleChange(event) {
-    const newInput = event.target.value;
-    setInputText(newInput);
-  }
+  
 
-  function addItem() {
+  function addItem(inputText) {
     if (inputText !== "") {
       setItem((prevItem) => {
         return [...prevItem, { id: uuidv4(), content: inputText }];
       });
-      setInputText("");
     }
   }
 
@@ -37,15 +34,12 @@ function App() {
       <div className="heading">
         <h1>To-Do List</h1>
       </div>
-      <div className="form">
-        <input onChange={handleChange} type="text" value={inputText} />
-        <button onClick={addItem}>
-          <span>Add</span>
-        </button>
-      </div>
+      <InputArea
+        onAdd={addItem}
+      />
       <div>
         <ul>
-          {items.map( (todoItem, index) =>
+          {items.map((todoItem, index) =>
             <ToDoItem
               key={todoItem.id}
               id={index}
