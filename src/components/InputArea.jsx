@@ -22,7 +22,7 @@ function InputArea(props) {
                 <span>Add</span>
             </button>
         </div>
-    )
+    );
 }
 
 export default InputArea;

@@ -4,10 +4,7 @@ import InputArea from "./InputArea";
 import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-  
   const [items, setItem] = useState([]);
-
-  
 
   function addItem(inputText) {
     if (inputText !== "") {
